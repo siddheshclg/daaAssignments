@@ -1,7 +1,21 @@
-import java.io.IOException;
 import java.lang.*;
 import java.util.*;
 public class Main {
+    public static String removeLeadingZeroes(String s){
+        boolean takeAll = false;
+        String t = "";
+        for(int i = 0;i < s.length();i++){
+            if(takeAll){
+                t += s.charAt(i);
+            }else{
+                if(s.charAt(i) != '0'){
+                    takeAll = true;
+                    t += s.charAt(i);
+                }
+            }
+        }
+        return t;
+    }
     public static String diff(String s,String t){
         String ans = "";
         if((t.length() > s.length())|| (s.length() == t.length() && s.compareTo(t) < 0)){
@@ -20,13 +34,11 @@ public class Main {
                 borrow = 0;
                 a--;
             }
-            if(a >= b){
-                ans =(char)((a-b) + '0') + ans;
-            }else{
+            if(a < b){
                 borrow = 1;
                 a += 10;
-                ans =(char)((a-b) + '0') + ans;
             }
+            ans =(char)((a-b) + '0') + ans;
         }
         return ans;
     }
@@ -77,26 +89,43 @@ public class Main {
                 br += t.charAt(i);
             }
         }
-       
+
         String lmul = multiply(al,bl);
         String rmul = multiply(ar,br);
-        
+
         String mmul = diff(multiply(add(al,ar),add(bl,br)),add(lmul,rmul));
         for(int i = 0;i < 2*ar.length();i++){
             lmul += "0";
         }
-        for(int i = 0;i < ar.length();i++){
+        for(int i = 0;i < ar.length();i++) {
             mmul += "0";
         }
-	//System.out.printf("%s %s ", lmul, rmul);
-	String ans = add(lmul,add(mmul,rmul));
-	return ans;
+        String ans = removeLeadingZeroes(add(lmul,add(mmul,rmul)));
+        return ans;
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String s = sc.nextLine();
-        String ans = multiply(s,s);
-        System.out.println(ans);
+        System.out.printf("Choose the option:%n1.Multiply two number%n2.Square a number%n");
+        while(true) {
+            int choice = sc.nextInt();
+            sc.nextLine();
+            switch (choice) {
+                case 1:
+                    System.out.printf("Enter two numbers : %n");
+                    String s, t;
+                    s = sc.nextLine();
+                    t = sc.nextLine();
+                    System.out.printf("Multiplication : %s", multiply(s, t));
+                    break;
+                case 2:
+                    System.out.printf("Enter a number : %n");
+                    String num = sc.nextLine();
+                    System.out.printf("Square : %s", multiply(num, num));
+                    break;
+                default:
+                    return;
+            }
+        }
     }
 }

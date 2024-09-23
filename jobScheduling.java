@@ -37,6 +37,7 @@ public class jobScheduling {
         System.out.println("Enter the number of jobs");
         int n = sc.nextInt();
         Job[] jobs = new Job[n];
+        int t = 0;
         for(int i = 0;i < n;i++){
             char id;
             int deadline,profit;
@@ -46,10 +47,9 @@ public class jobScheduling {
             deadline = sc.nextInt();
             System.out.println("Enter profit : ");
             profit = sc.nextInt();
+            t = Math.max(t,deadline);
             jobs[i] = new Job(id, deadline, profit);
         }
-        System.out.println("Enter the number of days");
-        int t = sc.nextInt();
         System.out.println("The sequence of jobs for maximum profit is ");
         Job.printSequence(jobs, n, t);
         sc.close();
